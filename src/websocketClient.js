@@ -1,5 +1,13 @@
 import WebSocket from 'ws';
 import crypto from 'crypto';
+import get from 'lodash/fp/get';
+import pipe from 'lodash/fp/pipe';
+
+const withData = listener => pipe(
+  get(`data`),
+  dataString => JSON.parse(dataString),
+  listener,
+);
 
 export default class HitBTCWebsocketClient {
   constructor({ key, secret, isDemo = false }) {
@@ -44,16 +52,16 @@ export default class HitBTCWebsocketClient {
   };
 
   addMarketMessageListener = listener =>
-    this.marketSocket.addEventListener(`message`, listener);
+    this.marketSocket.addEventListener(`message`, withData(listener));
 
   addTradingMessageListener = listener =>
-    this.tradingSocket.addEventListener(`message`, listener);
+    this.tradingSocket.addEventListener(`message`, withData(listener));
 
   removeMarketMessageListener = listener =>
-    this.marketSocket.removeEventListener(`message`, listener);
+    this.marketSocket.removeEventListener(`message`, withData(listener));
 
   removeTradingMessageListener = listener =>
-    this.tradingSocket.removeEventListener(`message`, listener);
+    this.tradingSocket.removeEventListener(`message`, withData(listener));
 
   addMarketListener = (event, listener) =>
     this.marketSocket.addEventListener(event, listener);

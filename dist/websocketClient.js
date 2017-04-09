@@ -12,7 +12,17 @@ var _crypto = require('crypto');
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
+var _get = require('lodash/fp/get');
+
+var _get2 = _interopRequireDefault(_get);
+
+var _pipe = require('lodash/fp/pipe');
+
+var _pipe2 = _interopRequireDefault(_pipe);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const withData = listener => (0, _pipe2.default)((0, _get2.default)(`data`), dataString => JSON.parse(dataString), listener);
 
 class HitBTCWebsocketClient {
   constructor({ key, secret, isDemo = false }) {
@@ -33,13 +43,13 @@ class HitBTCWebsocketClient {
       });
     };
 
-    this.addMarketMessageListener = listener => this.marketSocket.addEventListener(`message`, listener);
+    this.addMarketMessageListener = listener => this.marketSocket.addEventListener(`message`, withData(listener));
 
-    this.addTradingMessageListener = listener => this.tradingSocket.addEventListener(`message`, listener);
+    this.addTradingMessageListener = listener => this.tradingSocket.addEventListener(`message`, withData(listener));
 
-    this.removeMarketMessageListener = listener => this.marketSocket.removeEventListener(`message`, listener);
+    this.removeMarketMessageListener = listener => this.marketSocket.removeEventListener(`message`, withData(listener));
 
-    this.removeTradingMessageListener = listener => this.tradingSocket.removeEventListener(`message`, listener);
+    this.removeTradingMessageListener = listener => this.tradingSocket.removeEventListener(`message`, withData(listener));
 
     this.addMarketListener = (event, listener) => this.marketSocket.addEventListener(event, listener);
 
