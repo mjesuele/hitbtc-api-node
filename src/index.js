@@ -2,6 +2,7 @@ import WebsocketClient from './websocketClient';
 import axios from 'axios';
 import crypto from 'crypto';
 import get from 'lodash/fp/get';
+import keyBy from 'lodash/fp/keyBy';
 import map from 'lodash/fp/map';
 import mapValues from 'lodash/fp/mapValues';
 import shortid from 'shortid';
@@ -11,6 +12,9 @@ import { stringify } from 'qs';
 const labelOrderBookEntries = mapValues(
   map(([price, volume]) => ({ price, volume })),
 );
+
+// Ditto for the balance data
+const formatBalanceData = mapValues(keyBy(get(`currency_code`)));
 
 const uri = (path, params) =>
   `${path}?${stringify(params)}`;
@@ -119,7 +123,8 @@ export default class HitBTC {
   }
 
   getMyBalance = () =>
-    this.requestTrading(`/balance`, `get`, {});
+    this.requestTrading(`/balance`, `get`, {})
+      .then(formatBalanceData);
 
   getMyActiveOrders = (params = {}) =>
     this.requestTrading(`/orders/active`, `get`, params);

@@ -22,6 +22,10 @@ var _get = require('lodash/fp/get');
 
 var _get2 = _interopRequireDefault(_get);
 
+var _keyBy = require('lodash/fp/keyBy');
+
+var _keyBy2 = _interopRequireDefault(_keyBy);
+
 var _map = require('lodash/fp/map');
 
 var _map2 = _interopRequireDefault(_map);
@@ -40,6 +44,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Convert order book entries to a more convenient format
 const labelOrderBookEntries = (0, _mapValues2.default)((0, _map2.default)(([price, volume]) => ({ price, volume })));
+
+// Ditto for the balance data
+const formatBalanceData = (0, _mapValues2.default)((0, _keyBy2.default)((0, _get2.default)(`currency_code`)));
 
 const uri = (path, params) => `${path}?${(0, _qs.stringify)(params)}`;
 
@@ -108,7 +115,7 @@ class HitBTC {
       return _axios2.default[method](requestUrl, ...args).then((0, _get2.default)(`data`)).catch((0, _get2.default)(`response.data`));
     };
 
-    this.getMyBalance = () => this.requestTrading(`/balance`, `get`, {});
+    this.getMyBalance = () => this.requestTrading(`/balance`, `get`, {}).then(formatBalanceData);
 
     this.getMyActiveOrders = (params = {}) => this.requestTrading(`/orders/active`, `get`, params);
 
