@@ -63,7 +63,7 @@ module.exports = {
         ],
         "consistent-return": "error",
         "consistent-this": "error",
-        "curly": "error",
+        "curly": ["error", "multi-line"],
         "default-case": "error",
         "dot-location": ["error", "property"],
         "dot-notation": [
