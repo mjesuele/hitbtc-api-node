@@ -30,7 +30,6 @@
   "dependencies": {
     "axios": "^0.16.0",
     "lodash": "^4.17.4",
-    "pipe-peek": "^1.0.1",
     "qs": "^6.4.0",
     "shortid": "^2.2.8",
     "ws": "^2.2.3"
