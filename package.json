@@ -8,7 +8,7 @@
     "build": "babel src -d dist",
     "dev": "nodemon src/index.js --exec babel-node"
   },
-  "repository": "http://github.com/makeappsio/hitbtc-api.git",
+  "repository": "http://github.com/mjesuele/hitbtc-api-node.git",
   "author": "Matthew Jesuele <matt@makeapps.io>",
   "license": "MIT",
   "devDependencies": {
