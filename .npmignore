@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+.vscode
+config.js
+src
+test
