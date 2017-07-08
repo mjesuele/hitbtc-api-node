@@ -1,6 +1,6 @@
 {
   "name": "hitbtc-api",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Node.js client for the HitBTC API.",
   "main": "dist/index.js",
   "scripts": {
